@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/cartview.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.ico' %}">
+</head>
+<body>
+  <div class="navbar">
+    <a href="{% url 'home' %}" class="logo">WEIRDOS</a>
+    <div class="menu-toggle" id="mobile-menu">
+    </div>
+    <ul class="nav" id="navbar-menu">
+        <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+        <li><a href="{% url 'product_list' %}" class="nav-link active">Products</a></li>
+    </ul>
+  </div>
+
+  <h1 class="section-heading">Your Shopping Cart</h1>
+
+  <section class="content">
+    {% if messages %}
+        <div class="feedback">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if cart_items %}
+    <div class="cart-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>P{{ item.price }}</td>
+                    <td>
+                        <form action="{% url 'cart_update' item.product_id %}" method="post">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td>P{{ item.total_price }}</td>
+                    <td>
+                        <form action="{% url 'remove_from_cart' item.product_id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="cart-summary">
+        <h2>Total Price: P{{ total_price }}</h2>
+        <a href="{% url 'checkout' %}" class="btn">Proceed to Checkout</a>
+    </div>
+    {% else %}
+    <p>Your cart is empty. <a href="{% url 'product_list' %}">Continue Shopping</a></p>
+    {% endif %}
+  </section>
+
+  <footer id="footer">
+    <div class="title-text">
+        <h2>OTHERS</h2>
+        <h1>Visit Shop Today</h1>
+    </div>
+    <div class="footer-row">
+        <div class="footer-left">
+            <h1>Opening Hours</h1>
+            <p><i class="fa fa-clock-o"></i> Monday to Friday - 9am to 9pm</p>
+            <p><i class="fa fa-clock-o"></i> Saturday and Sunday - 8am to 8pm</p>
+        </div>
+        <div class="footer-right">
+            <h1>Get In Touch</h1>
+            <p>IMUS, CAVITE <i class="fa fa-map-marker"></i></p>
+            <p>3weirdossupplyco@gmail.com <i class="fa fa-envelope"></i></p>
+            <p>0996 804 9262 <i class="fa fa-phone"></i></p>
+        </div>
+    </div>
+    <div class="social-links">
+        <a href="https://www.facebook.com/3WeirdosSupplyCo?mibextid=qi2Omg&rdid=ILtXqaWpjlfyeGs4&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FVgmC1zDDgaU8NZ64%2F%3Fmibextid%3Dqi2Omg"><i class="fa fa-facebook"></i></a>
+        <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+        <a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a>
+    </div>
+    <div class="footer1">
+        <p>&copy; 2024 WEIRDOS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navbarMenu = document.getElementById('navbar-menu');
+
+    mobileMenu.addEventListener('click', () => {
+        navbarMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

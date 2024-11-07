@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #060505; /* Entire page background set to black */
+            color: #ff9900; /* General text color set to #ff9900 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+        .container {
+            width: 50%;
+            background: #111; /* Slightly lighter black for the form box */
+            color: #ff9900; /* Text color in container set to #ff9900 */
+            padding: 20px;
+            border-radius: 10px; /* Optional: round the corners */
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.5); /* Slightly orange shadow */
+            text-align: center; /* Center align text content inside container */
+        }
+        h1, h2, p {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px; /* Add margin to separate form from heading */
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px; /* Adjust padding for input elements */
+            box-sizing: border-box; /* Ensure padding and border are included in element's total width */
+        }
+        input[type="text"], input[type="password"] {
+            border: 1px solid #ff9900; /* Border color set to #ff9900 */
+            background-color: #fff; /* Background set to white */
+            color: #000; /* Text color set to black */
+        }
+        button {
+            background: #ff9900; /* Button background color set to #ff9900 */
+            color: black; /* Text color in button set to black */
+            border: none;
+            border-radius: 5px; /* Optional: round the corners */
+            cursor: pointer; /* Change cursor to pointer on hoverable elements */
+        }
+        button:hover {
+            background-color: #e68a00; /* Darken button background color on hover */
+        }
+        a {
+            color: #ff9900; /* Link color set to #ff9900 */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+</body>
+</html>

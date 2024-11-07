@@ -1,0 +1,16 @@
+<!-- cart/templates/cart/cart.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <ul>
+        {% for item in cart_items %}
+            <li>{{ item.product.name }} - ${{ item.product.price }} x {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/products/">Continue Shopping</a>
+</body>
+</html>

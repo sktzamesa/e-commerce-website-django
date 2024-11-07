@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}">
+    <link rel="stylesheet" href="{% static 'css/orderconfirm.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#" class="logo">WEIRDOS</a>
+        <ul class="nav">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'product_list' %}" class="active">Products</a></li>
+            <li>
+                <form action="{% url 'logout' %}?next={% url 'home' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; font: inherit;">LOG OUT</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Order Confirmation -->
+    <div class="order-container">
+        <div class="order-details">
+            <h1>Order Confirmation</h1>
+            <p>Thank you for your order! Your order number is <strong>{{ order.id }}</strong>.</p>
+            <p>Total Price: <strong>P{{ order.total_price }}</strong></p>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+      <a href="{% url 'product_list' %}" class="btn btn-primary custom-btn">Continue Shopping</a>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="title-text">
+            <h2>OTHERS</h2>
+            <h1>Visit Shop Today</h1>
+        </div>    
+        <div class="footer-row">
+            <div class="footer-left">
+                <h1>Opening Hours</h1>
+                <p><i class="fa fa-clock-o"></i> Monday to Friday - 9am to 9pm</p>
+                <p><i class="fa fa-clock-o"></i> Saturday and Sunday - 8am to 8pm</p>
+            </div>
+            <div class="footer-right">
+                <h1>Get In Touch</h1>
+                <p>IMUS, CAVITE <i class="fa fa-map-marker"></i></p>
+                <p>3weirdossupplyco@gmail.com <i class="fa fa-envelope"></i></p>
+                <p>0996 804 9262 <i class="fa fa-phone"></i></p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/3WeirdosSupplyCo?mibextid=qi2Omg&rdid=ILtXqaWpjlfyeGs4&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FVgmC1zDDgaU8NZ64%2F%3Fmibextid%3Dqi2Omg"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+            <a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a>
+        </div>
+        <div class="footer1">
+            <p>&copy; 2024 WEIRDOS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
